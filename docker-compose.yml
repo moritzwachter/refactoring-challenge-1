@@ -1,0 +1,37 @@
+version: "3.3"
+services:
+  php-cli:
+    image: exozet/php-fpm:7.4
+    user: www-data
+    entrypoint: bash
+    volumes:
+      - ./:/usr/src/app:cached
+      - ./.docker/cache/composer:/composer/cache/
+    env_file:
+      - ./.docker/common.env
+      - ./.env
+    ports:
+      - 9000
+    depends_on:
+      - nginx
+
+  php-fpm:
+    image: exozet/php-fpm:7.4
+    user: www-data
+    volumes:
+      - ./:/usr/src/app:cached
+      - ./.docker/cache/composer:/composer/cache/
+    env_file:
+      - ./.docker/common.env
+      - ./.env
+
+  nginx:
+    image: nginx:1.18
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/usr/src/app:cached
+      - ./.docker/nginx/app.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php-fpm
