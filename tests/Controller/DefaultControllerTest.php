@@ -27,7 +27,7 @@ class DefaultControllerTest extends WebTestCase
         $client->request('GET', self::HOST . '/?file=video_12345_q8c.mp4&directory=video1&quality=q6a&type=audio');
 
         $response = $client->getResponse();
+        $this->assertJsonStringEqualsJsonString('{"status": "error"}', $response->getContent());
         $this->assertSame(500, $response->getStatusCode());
-        $this->assertSame(['status' => 'error'], $response->getContent());
     }
 }
