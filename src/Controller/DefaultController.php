@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Mocks\FakeRepository;
 use App\Mocks\Quality;
 use Doctrine\ORM\EntityNotFoundException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,14 +18,13 @@ class DefaultController
      * @param FakeRepository $repo
      * @return JsonResponse
      */
-    public function indexAction(Request $request, FakeRepository $repo)
+    public function indexAction(Request $request, FakeRepository $repo, LoggerInterface $logger)
     {
         $filename = $request->query->get('file');
         $qualityKey = $request->query->get('quality');
         $directory = $request->query->get('directory');
         $type = $request->query->get('type');
 
-        $logger = $this->get('logger');
         $success = true;
         try {
             if ($type === 'image') {
