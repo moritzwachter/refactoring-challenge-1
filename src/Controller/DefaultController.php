@@ -25,7 +25,7 @@ class DefaultController
         $directory = $request->query->get('directory');
         $type = $request->query->get('type');
 
-        $success = true;
+        $success = false;
         try {
             if ($type === 'image') {
                 $logger->debug('Request is of type: image.');
@@ -66,6 +66,6 @@ class DefaultController
             return new JsonResponse(['status' => 'ok'], 200);
         }
 
-        return new JsonResponse(['status' => 'error', 500]);
+        return new JsonResponse(['status' => 'error'], 500);
     }
 }
