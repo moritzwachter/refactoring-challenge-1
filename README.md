@@ -13,9 +13,9 @@
 3. Read through: https://refactoring.guru/design-patterns to learn what Design Patterns are and what they are used for.
 4. Take a look at the `Strategy`-pattern and the `Factory`-pattern
 5. Refactor the code. Use the `Factory`-Pattern to generate your *Data Transfer Object* of your request attributes and the `Strategy`-pattern to create a separation of concerns.
-6. Create a MR and discuss the code with your mentor.
+6. Create a merge request and discuss the code with your mentor.
 
-Keep in mind to have an eye for a _comprehensible commit history_, coding standards and tests.
+Keep in mind having an eye for a _comprehensible commit history_, coding standards and tests.
 
 ## Running the project
 ```bash
