@@ -37,7 +37,7 @@ class DefaultControllerTest extends WebTestCase
      * @param $filename
      * @param $expectToFindEntity
      */
-    public function testParsingImageId($filename, $expectToFindEntity)
+    public function testParsingImageId(string $filename, int $expectedStatusCode): void
     {
         $url = self::HOST . "/?file=${filename}&directory=irrelevant&quality=irrelevant&type=image";
         $client = static::createClient();
@@ -45,58 +45,50 @@ class DefaultControllerTest extends WebTestCase
 
         $response = $client->getResponse();
 
-        if ($expectToFindEntity) {
-            $this->assertSame(200, $response->getStatusCode());
-        } else {
-            $this->assertSame(500, $response->getStatusCode());
-        }
+        $this->assertSame($expectedStatusCode, $response->getStatusCode());
     }
 
     public function parsingImageIdDataProvider(): array
     {
         return [
-            ['image_12345.irrelevant', true],
-            ['image_12346.gif', true],
-            ['image-something_12347.mp4', true],
-            ['image_12348.jpg', false],
-            ['image_12349.jpg', false],
-            ['image12349.jpg', false],
-            ['im_age_12345.jpg', false],
+            ['image_12345.irrelevant', 200],
+            ['image_12346.gif', 200],
+            ['image-something_12347.mp4', 200],
+            ['image_12348.jpg', 404],
+            ['image_12349.jpg', 404],
+            ['image12349.jpg', 404],
+            ['im_age_12345.jpg', 404],
         ];
     }
 
     /**
      * @dataProvider parsingVideoIdDataProvider
      *
-     * @param $filename
-     * @param $expectToFindEntity
+     * @param string $filename
+     * @param string $quality
+     * @param int $expectedStatusCode
      */
-    public function testParsingVideoId($filename, $quality, $expectToFindEntity)
+    public function testParsingVideoId(string $filename, string $quality, int $expectedStatusCode): void
     {
         $url = self::HOST . "/?file=${filename}&directory=irrelevant&quality=${quality}&type=video";
         $client = static::createClient();
         $client->request('GET', $url);
 
         $response = $client->getResponse();
-
-        if ($expectToFindEntity) {
-            $this->assertSame(200, $response->getStatusCode());
-        } else {
-            $this->assertSame(500, $response->getStatusCode());
-        }
+        $this->assertSame($expectedStatusCode, $response->getStatusCode());
     }
 
     public function parsingVideoIdDataProvider(): array
     {
         return [
-            ['video_12345_Q6A.irrelevant', 'q8c', true],
-            ['vid-eo_12346_ASDF.irrelevant', 'q6a', true],
-            ['_12347_ThisIsCompletely.irrelevant', 'q4a', true],
-            ['_12347_ThisIsCompletely.irrelevant', 'Q4A', false],
-            ['video_12347.mp4', 'q8c', false],
-            ['video_12348_Q8C.mp4', 'q8c', false],
-            ['video12349.jpg', 'q8c', false],
-            ['vi_deo_12345.jpg', 'q8c', false],
+            ['video_12345_Q6A.irrelevant', 'q8c', 200],
+            ['vid-eo_12346_ASDF.irrelevant', 'q6a', 200],
+            ['_12347_ThisIsCompletely.irrelevant', 'q4a', 200],
+            ['_12347_ThisIsCompletely.irrelevant', 'Q4A', 404],
+            ['video_12347.mp4', 'q8c', 404],
+            ['video_12348_Q8C.mp4', 'q8c', 404],
+            ['video12349.jpg', 'q8c', 404],
+            ['vi_deo_12345.jpg', 'q8c', 404],
         ];
     }
 }

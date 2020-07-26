@@ -59,7 +59,7 @@ class DefaultController
                 $success = true;
             }
         } catch (EntityNotFoundException $notFoundHttpException) {
-            $success = false;
+            return new JsonResponse(['status' => 'not found'], 404);
         }
 
         if ($success) {
