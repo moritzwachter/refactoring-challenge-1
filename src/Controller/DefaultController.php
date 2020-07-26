@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Mocks\FakeRepository;
-use App\Mocks\Quality;
 use Doctrine\ORM\EntityNotFoundException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
