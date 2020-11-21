@@ -28,13 +28,19 @@ class DefaultController
 
         $success = false;
         try {
-            if ($distributionData->getType() === 'image') {
-                $success = $imageStrategy->handleDistribution($distributionData);
-            } elseif ($distributionData->getType() === 'video') {
-                $success = $videoStrategy->handleDistribution($distributionData);
+            if ($distributionData->isImageType()) {
+                $chosenStrategy = $imageStrategy;
+            } elseif ($distributionData->isVideoType()) {
+                $chosenStrategy = $videoStrategy;
+            } else {
+                throw new \InvalidArgumentException('Invalid type');
             }
+
+            $success = $chosenStrategy->handleDistribution($distributionData);
         } catch (EntityNotFoundException $notFoundHttpException) {
             return new JsonResponse(['status' => 'not found'], 404);
+        } catch (\InvalidArgumentException $invalidArgumentException) {
+            $success = false;
         }
 
         if ($success) {

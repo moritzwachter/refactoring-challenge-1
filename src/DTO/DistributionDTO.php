@@ -6,6 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DistributionDTO
 {
+    const TYPE_IMAGE = 'image';
+    const TYPE_VIDEO = 'video';
+
     /** @var string */
     protected $filename;
 
@@ -72,5 +75,15 @@ class DistributionDTO
     public function getQualityKey(): string
     {
         return $this->qualityKey;
+    }
+
+    public function isImageType(): bool
+    {
+        return $this->getType() === self::TYPE_IMAGE;
+    }
+
+    public function isVideoType(): bool
+    {
+        return $this->getType() === self::TYPE_VIDEO;
     }
 }
