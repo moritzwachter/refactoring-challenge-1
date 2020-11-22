@@ -20,7 +20,7 @@ class VideoDistributionStrategy implements DistributionStrategyInterface
         $this->logger = $logger;
     }
 
-    public function handleDistribution(DistributionDTO $distributionDTO): bool
+    public function handleDistribution(DistributionDTO $distributionDTO): void
     {
         $this->logger->debug('Request is of type: video.');
 
@@ -37,7 +37,5 @@ class VideoDistributionStrategy implements DistributionStrategyInterface
         $quality = $this->repository->getQualityByKey($distributionDTO->getQualityKey());
         $video->setQuality($quality);
         $this->repository->save($video);
-
-        return true;
     }
 }

@@ -24,7 +24,7 @@ class ImageDistributionStrategy implements DistributionStrategyInterface
         $this->logger = $logger;
     }
 
-    public function handleDistribution(DistributionDTO $distributionDTO): bool
+    public function handleDistribution(DistributionDTO $distributionDTO): void
     {
         $this->logger->debug('Request is of type: image.');
 
@@ -37,7 +37,5 @@ class ImageDistributionStrategy implements DistributionStrategyInterface
         $image->setDirectory($distributionDTO->getDirectory());
         $image->setIsDistributed(true);
         $this->repository->save($image);
-
-        return true;
     }
 }

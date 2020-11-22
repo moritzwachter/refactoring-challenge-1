@@ -31,11 +31,10 @@ class ImageDistributionStrategyTest extends TestCase
         $this->assertFalse($imageBefore->isDistributed());
 
         $dto = new DistributionDTO('image_12345.jpg', 'directory', 'image', '');
-        $returnValue = $this->strategy->handleDistribution($dto);
+        $this->strategy->handleDistribution($dto);
 
         // check if it's now distributed
         $image = $this->repo->getImageById('12345');
-        $this->assertTrue($returnValue);
         $this->assertSame('directory', $image->getDirectory());
         $this->assertTrue($image->isDistributed());
     }

@@ -23,21 +23,17 @@ class DefaultController
     ) {
         $distributionData = DistributionDTO::fromRequest($request);
 
-        $success = false;
         try {
             $chosenStrategy = $factory->getDistributionStrategy($distributionData);
+            $chosenStrategy->handleDistribution($distributionData);
 
-            $success = $chosenStrategy->handleDistribution($distributionData);
+            return new JsonResponse(['status' => 'ok'], 200);
         } catch (EntityNotFoundException $notFoundHttpException) {
             return new JsonResponse(['status' => 'not found'], 404);
         } catch (\InvalidArgumentException $invalidArgumentException) {
-            $success = false;
+            return new JsonResponse(['status' => $invalidArgumentException->getMessage()], 500);
+        } catch (\Exception $e) {
+            return new JsonResponse(['status' => 'error'], 500);
         }
-
-        if ($success) {
-            return new JsonResponse(['status' => 'ok'], 200);
-        }
-
-        return new JsonResponse(['status' => 'error'], 500);
     }
 }

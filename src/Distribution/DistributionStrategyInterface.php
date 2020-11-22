@@ -6,5 +6,5 @@ use App\DTO\DistributionDTO;
 
 interface DistributionStrategyInterface
 {
-    public function handleDistribution(DistributionDTO $distributionDTO): bool;
+    public function handleDistribution(DistributionDTO $distributionDTO): void;
 }
