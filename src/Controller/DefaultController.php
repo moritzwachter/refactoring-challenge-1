@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Distribution\ImageDistributionStrategy;
-use App\Distribution\VideoDistributionStrategy;
+use App\Distribution\DistributionFactory;
 use App\DTO\DistributionDTO;
 use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,26 +14,18 @@ class DefaultController
     /**
      * @Route("/", name="homepage")
      * @param Request $request
-     * @param ImageDistributionStrategy $imageStrategy
-     * @param VideoDistributionStrategy $videoStrategy
+     * @param DistributionFactory $factory
      * @return JsonResponse
      */
     public function indexAction(
         Request $request,
-        ImageDistributionStrategy $imageStrategy,
-        VideoDistributionStrategy $videoStrategy
+        DistributionFactory $factory
     ) {
         $distributionData = DistributionDTO::fromRequest($request);
 
         $success = false;
         try {
-            if ($distributionData->isImageType()) {
-                $chosenStrategy = $imageStrategy;
-            } elseif ($distributionData->isVideoType()) {
-                $chosenStrategy = $videoStrategy;
-            } else {
-                throw new \InvalidArgumentException('Invalid type');
-            }
+            $chosenStrategy = $factory->getDistributionStrategy($distributionData);
 
             $success = $chosenStrategy->handleDistribution($distributionData);
         } catch (EntityNotFoundException $notFoundHttpException) {
