@@ -28,10 +28,11 @@ class ImageDistributionStrategy implements DistributionStrategyInterface
     {
         $this->logger->debug('Request is of type: image.');
 
-        $filename = $distributionDTO->getFilename();
-        $firstUnderscore = strpos($filename, '_');
-        $sU = strpos($filename, '.', $firstUnderscore + 1);
-        $id = (int)substr($filename, $firstUnderscore + 1, $sU - $firstUnderscore - 1);
+        $id = FilenameDataExtractor::getIdFromFilename(
+            $distributionDTO->getFilename(),
+            DistributionDTO::REGEX_IMAGE_FILENAME
+        );
+
         $image = $this->repository->getImageById($id);
 
         $image->setDirectory($distributionDTO->getDirectory());

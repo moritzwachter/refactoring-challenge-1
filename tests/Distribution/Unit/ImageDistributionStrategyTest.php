@@ -49,11 +49,12 @@ class ImageDistributionStrategyTest extends TestCase
 
     public function testEntityNotFoundException()
     {
-        $dto = new DistributionDTO('image12345.jpg', 'directory', 'image', '');
+        $dto = new DistributionDTO('image_12346.jpg', 'directory', 'image', '');
         $this->repo
             ->expects($this->once())
             ->method('getImageById')
-            ->with('0')->willThrowException(new EntityNotFoundException())
+            ->with(12346)
+            ->willThrowException(new EntityNotFoundException())
         ;
         $this->expectException(EntityNotFoundException::class);
 

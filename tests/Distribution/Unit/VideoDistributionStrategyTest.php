@@ -59,11 +59,12 @@ class VideoDistributionStrategyTest extends TestCase
 
     public function testEntityNotFoundException()
     {
-        $dto = new DistributionDTO('video12345.jpg', 'directory', 'video', '');
+        $dto = new DistributionDTO('video_12348_q6a.mp4', 'directory', 'video', '');
         $this->repo
             ->expects($this->once())
             ->method('getVideoById')
-            ->with('0')->willThrowException(new EntityNotFoundException())
+            ->with(12348)
+            ->willThrowException(new EntityNotFoundException())
         ;
         $this->expectException(EntityNotFoundException::class);
 

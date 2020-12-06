@@ -6,6 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DistributionDTO
 {
+    const REGEX_VIDEO_FILENAME = '/video_(?P<id>\d+)_(?P<quality>(?i)q4a|q6a|q8c|qxa|qxb).(?P<extension>(?i)mp4|webm)/';
+    const REGEX_IMAGE_FILENAME = '/image_(?P<id>\d+)\.(?P<extension>(?i)gif|png|jpg|jpeg)/';
+
     const TYPE_IMAGE = 'image';
     const TYPE_VIDEO = 'video';
 

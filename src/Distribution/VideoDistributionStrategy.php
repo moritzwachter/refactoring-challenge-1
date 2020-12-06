@@ -24,10 +24,10 @@ class VideoDistributionStrategy implements DistributionStrategyInterface
     {
         $this->logger->debug('Request is of type: video.');
 
-        $filename = $distributionDTO->getFilename();
-        $firstUnderscore = strpos($filename, '_');
-        $secondUnderscore = strpos($filename, '_', $firstUnderscore + 1);
-        $id = (int)substr($filename, $firstUnderscore + 1, $secondUnderscore - $firstUnderscore - 1);
+        $id = FilenameDataExtractor::getIdFromFilename(
+            $distributionDTO->getFilename(),
+            DistributionDTO::REGEX_VIDEO_FILENAME
+        );
 
         $video = $this->repository->getVideoById($id);
 

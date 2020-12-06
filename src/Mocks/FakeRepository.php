@@ -36,6 +36,7 @@ class FakeRepository
 
     public function getQualityByKey(string $key)
     {
+        $key = strtolower($key);
         if (!array_key_exists($key, $this->database->getQualities())) {
             throw new EntityNotFoundException("Object with key '{$key}' does not exist.");
         }

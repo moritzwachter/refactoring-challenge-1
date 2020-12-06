@@ -51,13 +51,13 @@ class DefaultControllerTest extends WebTestCase
     public function parsingImageIdDataProvider(): array
     {
         return [
-            ['image_12345.irrelevant', 200],
             ['image_12346.gif', 200],
-            ['image-something_12347.mp4', 200],
             ['image_12348.jpg', 404],
             ['image_12349.jpg', 404],
-            ['image12349.jpg', 404],
-            ['im_age_12345.jpg', 404],
+            ['image-something_12347.mp4', 500],
+            ['image_12345.irrelevant', 500],
+            ['image12349.jpg', 500],
+            ['im_age_12345.jpg', 500],
         ];
     }
 
@@ -81,14 +81,15 @@ class DefaultControllerTest extends WebTestCase
     public function parsingVideoIdDataProvider(): array
     {
         return [
-            ['video_12345_Q6A.irrelevant', 'q8c', 200],
-            ['vid-eo_12346_ASDF.irrelevant', 'q6a', 200],
-            ['_12347_ThisIsCompletely.irrelevant', 'q4a', 200],
-            ['_12347_ThisIsCompletely.irrelevant', 'Q4A', 404],
-            ['video_12347.mp4', 'q8c', 404],
+            ['video_12345_Q8C.mp4', 'Q8C', 200],
             ['video_12348_Q8C.mp4', 'q8c', 404],
-            ['video12349.jpg', 'q8c', 404],
-            ['vi_deo_12345.jpg', 'q8c', 404],
+            ['video_12345_Q6A.irrelevant', 'q8c', 500],
+            ['vid-eo_12346_ASDF.irrelevant', 'q6a', 500],
+            ['_12347_ThisIsCompletely.irrelevant', 'q4a', 500],
+            ['_12347_ThisIsCompletely.irrelevant', 'Q4A', 500],
+            ['video_12347.mp4', 'q8c', 500],
+            ['video12349.jpg', 'q8c', 500],
+            ['vi_deo_12345.jpg', 'q8c', 500],
         ];
     }
 }
