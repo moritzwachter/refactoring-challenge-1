@@ -15,7 +15,7 @@ class FilenameDataExtractor
             throw new FilenameParseException("Could not extract id from {$filename} with {$regex}");
         }
 
-        return (int) $matches['id'];
+        return (int)$matches['id'];
     }
 
     /**
@@ -24,7 +24,7 @@ class FilenameDataExtractor
      * @param string $regex
      * @return array
      */
-    public static function getParametersFromRegex(array $parameters, string $filename, string $regex) : array
+    public static function getParametersFromRegex(array $parameters, string $filename, string $regex): array
     {
         $matches = [];
         preg_match($regex, $filename, $matches);
