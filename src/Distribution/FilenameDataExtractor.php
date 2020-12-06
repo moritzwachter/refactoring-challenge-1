@@ -6,7 +6,7 @@ use App\Exception\FilenameParseException;
 
 class FilenameDataExtractor
 {
-    public static function getIdFromFilename(string $filename, string $regex)
+    public static function getIdFromFilename(string $filename, string $regex): int
     {
         $matches = [];
         preg_match($regex, $filename, $matches);
